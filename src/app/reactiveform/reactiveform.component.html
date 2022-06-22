@@ -1,0 +1,529 @@
+<div class="container-fluid">
+    <!-- formlist -->
+    <form action="validation" class="bg-light border border-primary container" (ngSubmit)="onSubmit()"
+        [formGroup]="form">
+        <div class="container rulesbutton">
+            <h1 class="heading1 text-primary">Reactive Form</h1>
+            <button type="button" class="addnewrule btn btn-success" (click)="addform(itemRows)">Add New Rule</button>
+        </div>
+        <!-- fromarray -->
+        <div class="container-lg form-row " formArrayName="itemRows">
+            <div class="container-md form-row rulesitem"
+                *ngFor="let itemRow of form.controls.itemRows.controls; let i=index;" [formGroupName]="i">
+                <!-- rules heading -->
+                <div class="container rules">
+                    <h4 class="text-primary heading2">Rules {{ i + 1 }}</h4>
+                    <button type="button" class="deleterule btn btn-danger" (click)="deleteform(i)">Delete
+                        Rule</button>
+                </div>
+                <!-- addnewroules and deleterules -->
+
+                <!-- {{itemRow | json}} -->
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault01">RuleId</label>
+                    <input type="text" class="form-control" id="RuleId" formControlName="RuleId">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleId').valid && itemRow.get('RuleId').touched">Please enter a
+                        valid
+                        RuleId </span>
+                </div>
+                <!-- {{!itemRow.get('RuleId').valid ? 'Valid true' : 'Valid false'}}
+                {{itemRow.get('RuleId').touched ? 'touched true' : 'touched false'}} -->
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault02">NetworkId</label>
+                    <input type="number" class="form-control" id="NetworkId" formControlName="NetworkId">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('NetworkId').valid && itemRow.get('NetworkId').touched">Please enter
+                        a
+                        valid NetworkId </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault03">OrgId</label>
+                    <input type="number" class="form-control" id="OrgId" formControlName="OrgId">
+                    <span class="help-block" *ngIf="!itemRow.get('OrgId').valid && itemRow.get('OrgId').touched">Please
+                        enter a valid
+                        OrgId </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault04">RuleName</label>
+                    <input type="text" class="form-control" id="RuleName" formControlName="RuleName">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleName').valid && itemRow.get('RuleName').touched">Please enter a
+                        valid RuleName</span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault05">RuleGroupId</label>
+                    <input type="text" class="form-control" id="RuleGroupId" formControlName="RuleGroupId">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleGroupId').valid && itemRow.get('RuleGroupId').touched">Please
+                        enter
+                        a valid RuleGroupId </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault06">RuleDescription</label>
+                    <input type="text" class="form-control" id="RuleDescription" formControlName="RuleDescription">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleDescription').valid && itemRow.get('RuleDescription').touched">Please
+                        enter a valid RuleDescription </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault07">Mode</label>
+                    <select class="custom-select" id="Mode" formControlName="Mode">
+                        <option [ngValue]="null">Select status</option>
+                        <option *ngFor="let m of ModeList">
+                            {{m}}
+                        </option>
+                    </select>
+                    <span class="help-block" *ngIf="!itemRow.get('Mode').valid && itemRow.get('Mode').touched">Please
+                        enter a valid
+                        Mode
+                    </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault08">RuleStatus</label>
+                    <select class="custom-select" id="RuleStatus" formControlName="RuleStatus"
+                        (change)="changeRuleStatus($event)">
+                        <option [ngValue]="null">Select status</option>
+                        <option *ngFor="let r of RuleStatusList">
+                            {{r}}
+                        </option>
+
+                    </select>
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleStatus').valid && itemRow.get('RuleStatus').touched">Please
+                        enter a
+                        valid RuleStatus </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault09">Tenant</label>
+                    <input type="text" class="form-control" id="Tenant" formControlName="Tenant">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('Tenant').valid && itemRow.get('Tenant').touched">Please enter a
+                        valid
+                        Tenant </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault10">Solution</label>
+                    <input type="text" class="form-control" id="Solution" formControlName="Solution">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('Solution').valid && itemRow.get('Solution').touched">Please enter a
+                        valid Solution </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault11">RuleType</label>
+                    <select class="custom-select" id="RuleType" formControlName="RuleType">
+                        <option [ngValue]="null">Select status</option>
+                        <option *ngFor="let R of RuleTypeList">
+                            {{R}}
+                        </option>
+
+                    </select>
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('RuleType').valid && itemRow.get('RuleType').touched">Please enter a
+                        valid RuleType </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault12">Recurrence</label>
+                    <input type="number" class="form-control" id="Recurrence" formControlName="Recurrence">
+                    <span class="help-block"
+                        *ngIf="!itemRow.get('Recurrence').valid && itemRow.get('Recurrence').touched">Please
+                        enter a
+                        valid Recurrence </span>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="validationDefault13">InputOp</label>
+                    <select class="custom-select" id="InputOp" formControlName="InputOp"
+                        (change)="changeInputOp($event)">
+                        <option [ngValue]="null">Select status</option>
+                        <option *ngFor="let I of InputOpList">
+                            {{I}}
+                        </option>
+
+                    </select>
+                    <span class="help-blocks"
+                        *ngIf="!itemRow.get('InputOp').valid && itemRow.get('InputOp').touched">Please enter a
+                        valid
+                        InputOp </span>
+                </div>
+
+                <!-- Inputs form add Button -->
+
+                <div class="col-md-12 mb-6 inputsaddButton">
+                    <button type="button" class="btn btn-success addInputs"
+                        (click)="addInputs(itemRow.get('Inputs'))">Add New Inputs</button>
+                </div>
+                <!-- next from inputs create -->
+                <div class="container-lg form-row  border border-success" formArrayName="Inputs">
+                    <div class="container-md form-row"
+                        *ngFor="let input of itemRow.get('Inputs').controls; let j=index;" [formGroupName]="j">
+
+                        <!-- Inputs Fields heading -->
+
+                        <div class="inputs">
+                            <h4 class="text-primary heading3">Inputs {{ j + 1 }}</h4>
+                            <button type="button" class="btn btn-danger  deleteInputs"
+                                (click)="deleteInputs(itemRow.get('Inputs'), j)">Delete Inputs</button>
+                        </div>
+                        <!-- BlockStatus -->
+                        <div class="col-md-6 mb-4">
+                            <label for="BlockStatus">BlockStatus</label>
+                            <input type="text" class="form-control" id="BlockStatus" formControlName="BlockStatus">
+                            <span class="help-block"
+                                *ngIf="!input.get('BlockStatus').valid && input.get('BlockStatus').touched">Please enter
+                                a
+                                valid
+                                Id</span>
+
+                        </div>
+
+                        <!-- {{!itemRow.get('Inputs').valid ? 'valid true' : 'valid false'}}
+                             {{itemRow.get('Inputs').touched ? 'touched true' : 'touched false'}}   -->
+                        <!-- Id -->
+                        <div class="col-md-6 mb-4">
+                            <label for="Id">Id</label>
+                            <input type="text" class="form-control" id="Id" formControlName="Id">
+                            <span class="help-block" *ngIf="!input.get('Id').valid && input.get('Id').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Type -->
+                        <div class="col-md-6 mb-4">
+                            <label for="Type">Type</label>
+                            <input type="text" class="form-control" id="Type" formControlName="Type">
+                            <span class="help-block"
+                                *ngIf="!input.get('Type').valid && input.get('Type').touched">Please enter a
+                                valid
+                                Type</span>
+
+                        </div>
+                        <!-- Networkfield -->
+                        <div class="col-md-6 mb-4">
+                            <label for="networkfield">Networkfield</label>
+                            <select class="custom-select" id="network field" formControlName="networkfield"
+                                (change)="changenetworkfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let n of networkfieldList">
+                                    {{n}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!input.get('networkfield').valid && input.get('networkfield').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Nodefield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Nodefield">Nodefield</label>
+                            <select class="custom-select" id="Nodefield" formControlName="Nodefield"
+                                (change)="changeNodefield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let N of NodefieldList">
+                                    {{N}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!input.get('Nodefield').valid && input.get('Nodefield').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Metricfield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="metricfield">Metricfield</label>
+                            <select class="custom-select" id="Nodefield" formControlName="metricfield"
+                                (change)="changemetricfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let m of metricfieldList">
+                                    {{m}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!input.get('metricfield').valid && input.get('metricfield').touched">Please enter
+                                a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Apifield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="apiField">Apifield</label>
+                            <select class="custom-select" id="apiField" formControlName="apiField"
+                                (change)="changemetricfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let a of apiFieldList">
+                                    {{a}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!input.get('apiField').valid && input.get('apiField').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Condition -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Condition">Condition</label>
+                            <select class="custom-select" id="Condition" formControlName="Condition"
+                                (change)="changeCondition($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let C of ConditionList">
+                                    {{C}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!input.get('Condition').valid && input.get('Condition').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- value -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="value"> value</label>
+                            <input type="text" class="form-control" id="value" formControlName="value">
+                            <span class="help-block"
+                                *ngIf="!input.get('value').valid && input.get('value').touched">Please enter a
+                                valid
+                                Id</span>
+                        </div>
+                        <!-- Description -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Description">Description</label>
+                            <input type="text" class="form-control" id="Description" formControlName="Description">
+                            <span class="help-block"
+                                *ngIf="!input.get('Description').valid && input.get('Description').touched">Please enter
+                                a
+                                valid
+                                Id</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- input form end -->
+
+
+                <!-- output form field -->
+                <!-- output form add Button -->
+                <div class="col-md-12 mb-6 outputsaddButton">
+                    <button type="button" class="btn btn-primary addOutputs"
+                        (click)="addOutputs(itemRow.get('Outputs'))">Add New Outputs</button>
+                </div>
+                <!-- next from output create -->
+                <div class="container-lg form-row  border border-primary" formArrayName="Outputs">
+                    <div class="container-md form-row"
+                        *ngFor="let output of itemRow.get('Outputs').controls; let k=index;" [formGroupName]="k">
+
+                        <!-- output Fields heading -->
+
+                        <div class="outputs">
+                            <h4 class="text-primary heading4">Outputs {{ k + 1 }}</h4>
+                            <button type="button" class="btn btn-danger  deleteOutputs"
+                                (click)="deleteOutputs(itemRow.get('Outputs'), k)">Delete Outputs </button>
+                        </div>
+                        <!-- BlockStatus -->
+                        <div class="col-md-6 mb-4">
+                            <label for="BlockStatus">BlockStatus</label>
+                            <input type="text" class="form-control" id="BlockStatus" formControlName="BlockStatus">
+                            <span class="help-block"
+                                *ngIf="!output.get('BlockStatus').valid && output.get('BlockStatus').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+
+                        </div>
+
+                        <!-- Id -->
+                        <div class="col-md-6 mb-4">
+                            <label for="Id">Id</label>
+                            <input type="text" class="form-control" id="Id" formControlName="Id">
+                            <span class="help-block" *ngIf="!output.get('Id').valid && output.get('Id').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Type -->
+                        <div class="col-md-6 mb-4">
+                            <label for="Type">Type</label>
+                            <input type="text" class="form-control" id="Type" formControlName="Type">
+                            <span class="help-block"
+                                *ngIf="!output.get('Type').valid && output.get('Type').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Networkfield -->
+                        <div class="col-md-6 mb-4">
+                            <label for="networkfield">Networkfield</label>
+                            <select class="custom-select" id="network field" formControlName="networkfield"
+                                (change)="changenetworkfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let n of networkfieldList">
+                                    {{n}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!output.get('networkfield').valid && output.get('networkfield').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Nodefield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Nodefield">Nodefield</label>
+                            <select class="custom-select" id="Nodefield" formControlName="Nodefield"
+                                (change)="changeNodefield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let N of NodefieldList">
+                                    {{N}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!output.get('Nodefield').valid && output.get('Nodefield').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Metricfield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="metricfield">Metricfield</label>
+                            <select class="custom-select" id="Nodefield" formControlName="metricfield"
+                                (change)="changemetricfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let m of metricfieldList">
+                                    {{m}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!output.get('metricfield').valid && output.get('metricfield').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Apifield -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="apiField">Apifield</label>
+                            <select class="custom-select" id="apiField" formControlName="apiField"
+                                (change)="changemetricfield($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let a of apiFieldList">
+                                    {{a}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!output.get('apiField').valid && output.get('apiField').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- Condition -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Condition">Condition</label>
+                            <select class="custom-select" id="Condition" formControlName="Condition"
+                                (change)="changeCondition($event)">
+                                <option [ngValue]="null">Select status</option>
+                                <option *ngFor="let C of ConditionList">
+                                    {{C}}
+                                </option>
+
+                            </select>
+                            <span class="help-blocks"
+                                *ngIf="!output.get('Condition').valid && output.get('Condition').touched">Please enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                        <!-- value -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="value"> value</label>
+                            <input type="text" class="form-control" id="value" formControlName="value">
+                            <span class="help-block"
+                                *ngIf="!output.get('value').valid && output.get('value').touched">Please enter a
+                                valid
+                                Id</span>
+                        </div>
+                        <!-- Description -->
+
+                        <div class="col-md-6 mb-4">
+                            <label for="Description">Description</label>
+                            <input type="text" class="form-control" id="Description" formControlName="Description">
+
+                            <span class="help-block"
+                                *ngIf="!output.get('Description').valid && output.get('Description').touched">Please
+                                enter a
+                                valid
+                                Id</span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="border border-light p-3 mb-5">
+            <div class="text-center">
+                <button class="btn btn-primary submit" type="submit">Add form</button>
+
+                <!-- <div class="container">
+                    <table class="table table-hover table-dark">
+                      <thead>
+                        <tr>
+                          <th scope="col">RuleId</th>
+                          <th scope="col">RuleName</th>
+                          <th scope="col">RuleGroupId</th>
+                          <th scope="col">RuleDescription</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor= "let obj of tableSource; let a = index">
+                         <td>{{ obj.RuleId }}</td>
+                         <td>{{ obj.RuleName }}</td>
+                         <td>{{ obj.RuleGroupId }}</td>
+                         <td>{{ obj.RuleDescription }}</td>
+                        </tr>
+                       
+                      </tbody>
+                    </table>
+              </div> -->
+
+            </div>
+        </div>
+        <!-- from list Roules end  -->
+  
+    </form>
+
+   
+</div>
+
+<!--       
+<pre>
+    {{form.value | json}}
+</pre> -->
+
